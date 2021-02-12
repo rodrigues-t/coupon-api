@@ -1,8 +1,8 @@
-const Coupon = require("../models/Coupon");
+const couponServices = require('../services/database/couponServices');
 
 async function find(req, res) {
     try {
-        const coupons = await Coupon.find({});
+        const coupons = await couponServices.findAll();
         return res.json(coupons);
     } catch (e) {
         return res.status(500).json({ message: 'Unknow error' });
@@ -12,7 +12,7 @@ async function find(req, res) {
 
 async function findByCode(req, res) {
     try {
-        const coupon = await Coupon.findOne({ code: req.params.id }).exec();
+        const coupon = await couponServices.findByCode(req.params.code);
         if (coupon) {
             return res.json(coupon);
         } else {
@@ -26,7 +26,7 @@ async function findByCode(req, res) {
 async function insert(req, res) {
     try {
         const coupon = req.body
-        const document = await new Coupon(coupon).save();
+        const document = await couponServices.insert(coupon);
         res.json(document);
     } catch (e) {
         return res.status(500).json({ message: 'Unknow error' });
@@ -35,7 +35,7 @@ async function insert(req, res) {
 
 async function remove(req, res) {
     try {
-        const result = await Coupon.deleteOne({ code: req.params.code });
+        const result = await couponServices.remove(req.params.code);
         if (result.deletedCount === 0) {
             return res.status(404).end();
         }
@@ -47,7 +47,7 @@ async function remove(req, res) {
 
 async function redeem(req, res) {
     try {
-        let coupon = await Coupon.findOne({ code: req.params.code });
+        let coupon = await couponServices.find({ code: req.params.code });
         if (!coupon) {
             return res.status(404).end();
         } else {
