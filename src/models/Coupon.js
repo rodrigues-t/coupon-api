@@ -21,8 +21,8 @@ const couponSchema = new mongoose.Schema({
         type: Date,
         default: () => new Date()
     },
-    //aaaa-MM-dd hh:mm
     expirationDate: Date,
+    redeemedDate: Date,
     value: Number,
     unit: String,
     title: String,
