@@ -1,3 +1,4 @@
 const coupon = require("./coupon");
+const user = require("./user");
 
-module.exports = [coupon];
+module.exports = [coupon, user];
