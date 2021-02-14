@@ -6,16 +6,18 @@ const routes = Router();
 
 routes.post(
     '/signin',
-    async(req, res, next) => {
+    async (req, res, next) => {
         passport.authenticate(
             'signin',
-            {session: false},
+            { session: false },
             async (error, user, message) => {
-                res.json({
-                    error,
-                    user,
-                    message: message ? message.message : undefined
-                })
+                if (error || (!user)) {
+                    return res.json({
+                        error,
+                        message: message ? message.message : undefined
+                    })
+                }
+                return res.json(user);
             }
         )(req, res, next);
     }

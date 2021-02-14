@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const { getCode } = require('../services/utils/codeServices');
 
 const { customAlphabet } = require("nanoid");
 const nanoid = customAlphabet('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ', 12);
@@ -15,7 +16,7 @@ const couponSchema = new mongoose.Schema({
     code: {
         type: String,
         index: true,
-        default: () => nanoid(12)
+        default: () => getCode()
     },
     issueDate: {
         type: Date,

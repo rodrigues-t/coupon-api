@@ -1,6 +1,6 @@
 const express = require('express');
 require('./database');
-require('./middlewares/auth');
+require('./helpers/auth');
 
 class App {
     constructor() {
