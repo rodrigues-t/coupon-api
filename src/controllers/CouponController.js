@@ -29,7 +29,10 @@ async function insert(req, res) {
         const document = await couponServices.insert(coupon);
         res.json(document);
     } catch (e) {
-        return res.status(500).json({ message: 'Unknow error' });
+        return res.status(500).json({
+            error: e,
+            message: 'Unknow error'
+        });
     }
 }
 

@@ -31,6 +31,11 @@ const couponSchema = new mongoose.Schema({
     holder: {
         type: holderSchema,
         default: null
+    },
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
     }
 });
 
