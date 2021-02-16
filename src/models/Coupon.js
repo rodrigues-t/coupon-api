@@ -1,9 +1,6 @@
 const mongoose = require('mongoose')
 const { getCode } = require('../services/utils/codeServices');
 
-const { customAlphabet } = require("nanoid");
-const nanoid = customAlphabet('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ', 12);
-
 const holderSchema = new mongoose.Schema({
     name: String,
     key: {
