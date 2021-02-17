@@ -1,4 +1,5 @@
 const express = require('express');
+const helmet = require('helmet');
 require('./database');
 require('./helpers/auth');
 
@@ -12,7 +13,8 @@ class App {
     }
     
     middlewares() {
-        this.express.use(express.json())
+        this.express.use(express.json());
+        this.express.use(helmet());
     }
 
     routes(){
