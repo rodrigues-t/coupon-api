@@ -2,30 +2,30 @@ const couponServices = require('../services/database/couponServices');
 
 async function find(req, res) {
     try {
-        const coupons = await couponServices.findAll();
+        const coupons = await couponServices.find(req.userId);
         return res.json(coupons);
-    } catch (e) {
-        return res.status(500).json({ message: 'Unknow error' });
+    } catch (error) {
+        return res.status(500).json({ error, message: 'Unknow error' });
     }
-
 }
 
 async function findByCode(req, res) {
     try {
-        const coupon = await couponServices.findByCode(req.params.code);
+        const coupon = await couponServices.findByCode(req.params.code, req.userId);
         if (coupon) {
             return res.json(coupon);
         } else {
             return res.status(404).end();
         }
     } catch (e) {
-        return res.status(500).json({ message: 'Unknow error', aa: e.message });
+        return res.status(500).json({ message: 'Unknow error' });
     }
 }
 
 async function insert(req, res) {
     try {
-        const coupon = req.body
+        const coupon = req.body;
+        coupon.user = req.userId;
         const document = await couponServices.insert(coupon);
         res.json(document);
     } catch (e) {
@@ -38,7 +38,7 @@ async function insert(req, res) {
 
 async function remove(req, res) {
     try {
-        const result = await couponServices.remove(req.params.code);
+        const result = await couponServices.remove(req.params.code, req.userId);
         if (result.deletedCount === 0) {
             return res.status(404).end();
         }
@@ -50,21 +50,17 @@ async function remove(req, res) {
 
 async function redeem(req, res) {
     try {
-        let coupon = await couponServices.find({ code: req.params.code });
+        let coupon = await couponServices.findByCode(req.params.code, req.userId);
         if (!coupon) {
             return res.status(404).end();
         } else {
             if (coupon.redeemedDate) {
-                return res.status(400).send({
-                    errors: [
-                        { code: ['Coupon already redeemed.'] }
-                    ]
-                });
+                return res.status(400).send({ message: 'Coupon already redeemed.' });
             }
             await coupon.updateOne({ redeemedDate: new Date() });
         }
         return res.send();
-    } catch (e) {
+    } catch (error) {
         return res.status(500).json({ message: 'Unknow error' });
     }
 }
