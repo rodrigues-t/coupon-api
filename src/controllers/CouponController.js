@@ -2,7 +2,9 @@ const couponServices = require('../services/database/couponServices');
 
 async function find(req, res) {
     try {
-        const coupons = await couponServices.find(req.userId);
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 100;
+        const coupons = await couponServices.find(req.userId, page, limit);
         return res.json(coupons);
     } catch (error) {
         return res.status(500).json({ error, message: 'Unknow error' });

@@ -1,7 +1,18 @@
 const Coupon = require('../../models/Coupon');
 
-exports.find = async function (userId, length = 100, page = 1) {
-    return await Coupon.find({ user: userId }).exec();
+exports.find = async function (userId, page = 1, limit = 100) {
+    const coupons = await Coupon.find({ user: userId })
+        .skip((page - 1) * limit)
+        .limit(limit)
+        .exec();
+    const count = await Coupon.countDocuments({ user: userId });
+    const totalPages = Math.ceil(count / limit);
+    return {
+        coupons,
+        page,
+        totalPages,
+        totalItems: count
+    }
 }
 
 exports.findByCode = async function (code, userId) {
