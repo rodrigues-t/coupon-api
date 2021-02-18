@@ -48,19 +48,24 @@ passport.use(
         },
         async (req, email, password, done) => {
             try {
-                const user = await User.create({ email, password, name: req.body.name });
+                const user = await User.create({ email, password, name: req.body.name.trim() });
                 return done(null, extractPassword(user));
             } catch (error) {
                 if (error.name === 'MongoError') {
                     if (error.keyValue && error.keyValue.email) {
-                        done({ message: 'E-mail already registered.' });
+                        done({
+                            message: 'E-mail already registered.',
+                            errors: {
+                                email: 'E-mail already registered.'
+                            }
+                        });
                     } else {
-                        done({ message: 'Unexpected error.' });
+                        done({ message: 'Unexpected error.', errors: null });
                     }
                 } else if (error.name === '"ValidationError') {
-                    done({ message: error.message });
+                    done({ message: error.message, errors: null });
                 } else {
-                    done({ message: 'Unknown error.' });
+                    done({ message: 'Unknown error.', errors: null });
                 }
             }
         }

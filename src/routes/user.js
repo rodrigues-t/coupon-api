@@ -1,4 +1,5 @@
 const express = require("express");
+const userValidator = require("../middlewares/validation/user");
 const passport = require("passport");
 const Router = express.Router;
 
@@ -25,15 +26,16 @@ routes.post(
 
 routes.post(
     "/signup",
+    userValidator.singup,
     async (req, res, next) => {
         passport.authenticate(
             'signup',
             { session: false },
             async (error, user) => {
-                res.json({
-                    error,
-                    user
-                });
+                if (error) {
+                    return res.status(400).json(error);
+                }
+                return res.json(user);
             }
         )(req, res, next);
     }
