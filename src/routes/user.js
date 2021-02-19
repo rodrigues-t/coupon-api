@@ -11,12 +11,15 @@ routes.post(
         passport.authenticate(
             'signin',
             { session: false },
-            async (error, user, message) => {
+            async (error, user, passportFailMessage) => {
                 if (error || (!user)) {
-                    return res.json({
-                        error,
-                        message: message ? message.message : undefined
-                    })
+                    if (passportFailMessage) {
+                        return res.status(400).json({
+                            message: passportFailMessage.message,
+                            errors: null
+                        });
+                    }
+                    return res.status(400).json(error);
                 }
                 return res.json(user);
             }

@@ -18,11 +18,23 @@ passport.use(
             try {
                 const user = await User.findOne({ email });
                 if (!user) {
-                    return done(null, false, { message: 'User not found' })
+                    return done(
+                        {
+                            message: 'User not found',
+                            errors: null,
+                        },
+                        false
+                    );
                 }
                 const isValid = await user.isValidPassword(password);
                 if (!isValid) {
-                    return done(null, false, { message: 'Wrong password' });
+                    return done(
+                        {
+                            message: 'Wrong password',
+                            errors: null,
+                        },
+                        false
+                    );
                 }
                 return done(
                     null,
@@ -32,7 +44,13 @@ passport.use(
                     }
                 );
             } catch (error) {
-                return done(error)
+                return done(
+                    {
+                        message: 'Unknown error',
+                        errors: null,
+                    },
+                    false
+                )
             }
         }
     )
