@@ -1,5 +1,5 @@
 # coupon-api
-Coupon generator API.
+Coupon generator API. Create and manage discount coupons for your customers.
 
 ## Getting started
 
