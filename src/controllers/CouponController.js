@@ -28,6 +28,10 @@ async function insert(req, res) {
     try {
         const { expirantioDate, value, unit, title, body, holder } = req.body;
         const coupon = { expirantioDate, value, unit, title, body, holder, user: req.userId };
+        if(coupon.holder) {
+            coupon.holder.name = coupon.holder.name.trim();
+            coupon.holder.key = coupon.holder.key.trim();
+        }
         const document = await couponServices.insert(coupon);
         res.json(document);
     } catch (e) {
