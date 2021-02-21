@@ -54,6 +54,25 @@ async function remove(req, res) {
     }
 }
 
+async function cancel(req, res) {
+    try {
+        let coupon = await couponServices.findByCode(req.params.code, req.userId);
+        if (!coupon) {
+            return res.status(404).end();
+        } else {
+            if (coupon.redeemedDate) {
+                return res.status(400).send({ message: 'Coupon already redeemed.' });
+            } else if(coupon.cancellationDate) {
+                return res.status(400).send({ message: 'Coupon already canceled.' });
+            }
+            await coupon.updateOne({ cancellationDate: new Date() });
+        }
+        return res.send();
+    } catch (error) {
+        return res.status(500).json({ message: 'Unknown error' });
+    }
+}
+
 async function redeem(req, res) {
     try {
         let coupon = await couponServices.findByCode(req.params.code, req.userId);
@@ -62,12 +81,14 @@ async function redeem(req, res) {
         } else {
             if (coupon.redeemedDate) {
                 return res.status(400).send({ message: 'Coupon already redeemed.' });
+            } else if(coupon.cancellationDate) {
+                return res.status(400).send({ message: 'Coupon already canceled.' });
             }
             await coupon.updateOne({ redeemedDate: new Date() });
         }
         return res.send();
     } catch (error) {
-        return res.status(500).json({ message: 'Unknow error' });
+        return res.status(500).json({ message: 'Unknown error' });
     }
 }
 
@@ -76,5 +97,6 @@ module.exports = {
     findByCode,
     insert,
     remove,
+    cancel,
     redeem
 }

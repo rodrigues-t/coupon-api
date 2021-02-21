@@ -21,6 +21,7 @@ const couponSchema = new mongoose.Schema({
     },
     expirationDate: Date,
     redeemedDate: Date,
+    cancellationDate: Date,
     value: Number,
     unit: String,
     title: String,

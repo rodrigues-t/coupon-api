@@ -13,5 +13,6 @@ routes.get("/coupon/:code", CouponController.findByCode);
 routes.post("/coupon", couponValidator.insert, CouponController.insert);
 routes.delete("/coupon/:code", CouponController.remove);
 routes.put("/coupon/:code/redeem", CouponController.redeem);
+routes.put("/coupon/:code/cancel", CouponController.cancel);
 
 module.exports = routes;
