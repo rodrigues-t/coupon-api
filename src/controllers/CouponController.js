@@ -26,8 +26,8 @@ async function findByCode(req, res) {
 
 async function insert(req, res) {
     try {
-        const coupon = req.body;
-        coupon.user = req.userId;
+        const { expirantioDate, value, unit, title, body, holder } = req.body;
+        const coupon = { expirantioDate, value, unit, title, body, holder, user: req.userId };
         const document = await couponServices.insert(coupon);
         res.json(document);
     } catch (e) {
