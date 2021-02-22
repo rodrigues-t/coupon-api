@@ -1,3 +1,23 @@
+/**
+ * @swagger
+ *  components:
+ *    schemas:
+ *      Coupon:
+ *        type: object
+ *        required:
+ *          - code
+ *        properties:
+ *          code:
+ *            type: string
+ *          email:
+ *            type: string
+ *            format: email
+ *            description: Email for the user, needs to be unique.
+ *        example:
+ *           name: Alexander
+ *           email: fake@email.com
+ */
+
 const mongoose = require('mongoose')
 const { getCode } = require('../services/utils/codeServices');
 

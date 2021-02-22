@@ -28,4 +28,5 @@ $ npm run dev
 - Express
 - Mongoose
 - Passport
+- Swagger
 - Helmet

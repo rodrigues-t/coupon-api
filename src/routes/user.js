@@ -1,3 +1,9 @@
+/**
+ * @swagger
+ * tags:
+ *   name: User
+ *   description: User management
+ */
 const express = require("express");
 const userValidator = require("../middlewares/validation/user");
 const passport = require("passport");
@@ -5,6 +11,14 @@ const Router = express.Router;
 
 const routes = Router();
 
+/**
+ * @swagger
+ * /signin:
+ *   post:
+ *     tags: [User]
+ *     summary: Sign in
+ *     description: API sign in returning user object and token.
+*/
 routes.post(
     '/signin',
     async (req, res, next) => {
@@ -27,6 +41,14 @@ routes.post(
     }
 )
 
+/**
+ * @swagger
+ * /signup:
+ *   post:
+ *     tags: [User]
+ *     summary: Sing up
+ *     description: API sign up.
+*/
 routes.post(
     "/signup",
     userValidator.singup,
