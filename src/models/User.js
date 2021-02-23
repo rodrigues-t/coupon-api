@@ -1,3 +1,28 @@
+/**
+ * @swagger
+ *  components:
+ *    schemas:
+ *      User:
+ *        type: object
+ *        required:
+ *          - _id
+ *          - email
+ *          - name
+ *        properties:
+ *          _id:
+ *            type: string
+ *          email:
+ *            type: string
+ *            format: email
+ *            description: Email for the user, needs to be unique.
+ *          name:
+ *            type: string
+ *        example:
+ *           _id: 602eeb4fee2b082a10799704
+ *           name: Robert Plat
+ *           email: plant@email.com
+ */
+
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');

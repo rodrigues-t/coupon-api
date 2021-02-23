@@ -48,7 +48,7 @@ class App {
                     },
                 ],
             },
-            apis: ["src/routes/user.js", "src/routes/coupon.js"],
+            apis: ["src/routes/*.js", "src/models/*.js"],
         };
         const specs = swaggerJsdoc(options);
         console.log(specs);

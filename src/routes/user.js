@@ -4,6 +4,7 @@
  *   name: User
  *   description: User management
  */
+
 const express = require("express");
 const userValidator = require("../middlewares/validation/user");
 const passport = require("passport");
@@ -15,9 +16,39 @@ const routes = Router();
  * @swagger
  * /signin:
  *   post:
+ *     security: []
  *     tags: [User]
  *     summary: Sign in
- *     description: API sign in returning user object and token.
+ *     description: API sign in returning user object and token
+ *     requestBody:
+ *       description: A JSON object containing credentials information
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *               password:  
+ *                 type: string
+ *             example:
+ *               email: youremail@fake.com
+ *               password: yourpassword
+ *     responses:
+ *       "200":
+ *         description: User schema and token
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 token:
+ *                   type: string
+ *                   example: "eyJhbGciO...LvjQ9_AwCwojg6KgtE"
+ *                 user:
+ *                   $ref: '#/components/schemas/User'
+ * 
 */
 routes.post(
     '/signin',
@@ -45,10 +76,11 @@ routes.post(
  * @swagger
  * /signup:
  *   post:
+ *     security: []
  *     tags: [User]
  *     summary: Sing up
  *     description: API sign up.
-*/
+ */
 routes.post(
     "/signup",
     userValidator.singup,

@@ -17,40 +17,8 @@
  *            description: Token invalid or missing message.
  *        example:
  *           code: Invalid token
- *      Coupon:
- *        type: object 
- *        properties:
- *          code:
- *            type: string
- *            description: Coupon unique code.  
- *          issueDate:
- *            type: date
- *            format: date
- *            description: Coupon issue date.
- *        example:
- *           code: LMO9NTCYP3NN
- *           issueDate: 2021-02-21T03:14:32.597Z
  */
 
- /**
- *  /coupon/:
- *    post:
- *      summary: Create a new user
- *      tags: [Coupon]
- *      requestBody:
- *        required: true
- *        content:
- *          application/json:
- *            schema:
- *              $ref: '#/components/schemas/User'
- *      responses:
- *        "200":
- *          description: A user schema
- *          content:
- *            application/json:
- *              schema:
- *                $ref: '#/components/schemas/User'
- */
 const express = require("express");
 const CouponController = require("../controllers/CouponController");
 const couponValidator = require("../middlewares/validation/coupon");
