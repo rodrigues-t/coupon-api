@@ -48,7 +48,17 @@ const routes = Router();
  *                   example: "eyJhbGciO...LvjQ9_AwCwojg6KgtE"
  *                 user:
  *                   $ref: '#/components/schemas/User'
- * 
+ *       "400":
+ *         description: Sign in problem
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   enum: [Missing credentials, User not found, Wrong password, Unknown error]
+ *                   example: "Wrong password"
 */
 routes.post(
     '/signin',

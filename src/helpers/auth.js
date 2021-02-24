@@ -78,7 +78,7 @@ passport.use(
                             }
                         });
                     } else {
-                        done({ message: 'Unexpected error.', errors: null });
+                        done({ message: 'Unexpected database error.', errors: null });
                     }
                 } else if (error.name === '"ValidationError') {
                     done({ message: error.message, errors: null });
